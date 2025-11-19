@@ -1,0 +1,24 @@
+comandos de ayuda para git 
+no trabajar en la rama principal es decir la main 
+
+-> crear una nueva rama 
+git checkout -b mirama 
+
+-> traabajar aca 
+git add .
+git commit -m "trabajando en mi rama" 
+
+-> evitar conflictos 
+git checkout main
+git pull origin main          
+git checkout mirama
+git merge main 
+
+-> ir al main 
+git checkout main 
+
+-> traer los cambios de mi rama 
+git merge mirama 
+
+->subir los cambios 
+git push -u origin main 

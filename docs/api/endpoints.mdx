@@ -1,0 +1,281 @@
+CRUD = es un acrónimo que representa las cuatro operaciones básicas que se pueden realizar sobre datos en cualquier sistema:
+
+    Create (Crear)
+
+    Read (Leer)
+
+    Update (Actualizar)
+
+    Delete (Eliminar)
+    
+POST = CREAR
+GET = LEER
+PUT/PATCH = ACTUALIZAR
+DELETE = ELIMINAR
+-----------------------------------------------------------------------
+guia doc. 
+HU1 = Registro de una empresa y creacion de usuario <-----
+
+url =http://127.0.0.1:8000/api/register/empresa-user/
+HTTP = POST 
+JSON (ejemplo)= 
+{
+  "empresa": {
+    "razon_social": "Mi Empresa SA",
+    "email_contacto": "contacto@miempresa.com",
+    "nombre_comercial": "Mi Empresa",
+    "imagen_url": "http://ejemplo.com/imagen.jpg"
+  },
+  "user": {
+    "username": "usuario1",
+    "password": "contraseña123",
+    "email": "usuario@miempresa.com",
+    "first_name": "Juan",
+    "last_name": "Pérez"
+  }
+}
+JSON (respuesta)
+{
+  "message": "Registro exitoso",
+  "empresa": {
+    "id": 1,
+    "razon_social": "Mi Empresa SA",
+    "email_contacto": "contacto@miempresa.com",
+    "nombre_comercial": "Mi Empresa",
+    "fecha_registro": "2023-11-04T00:00:00Z",
+    "activo": true,
+    "imagen_url": "http://ejemplo.com/imagen.jpg"
+  },
+  "user": {
+    "id": 1,
+    "username": "usuario1",
+    "first_name": "Juan",
+    "last_name": "Pérez",
+    "email": "usuario@miempresa.com",
+    "date_joined": "2023-11-04T00:00:00Z",
+    "is_superuser": false,
+    "is_staff": false,
+    "empresa_id": 1,
+    "empresa_nombre": "Mi Empresa SA"
+  },
+  "perfil_user": {
+    "id": 1,
+    "empresa_id": 1,
+    "usuario_id": 1,
+    "imagen_url": null
+  },
+  "token": "tu-token-de-autenticación"
+}
+(como ves te da un token este token tienes que guardar para poder utilizar)
+-----------------------------------------------------------------------
+HU2     Suscripcion / plan <-----
+
+url = http://127.0.0.1:8000/api/suscripcion
+HTTP = crud
+Json ejemplo con post 
+{
+    "empresa": 1,
+    "tipo_plan": "PREMIUM",
+    "fecha_inicio": "2023-11-04",
+    "fecha_fin": "2024-11-04",
+    "monto": 99.99,
+    "estado": true,
+    "metodo_pago": "TARJETA"
+}
+respuesta
+{
+    "id": 1,
+    "empresa": 1,
+    "tipo_plan": "PREMIUM",
+    "fecha_inicio": "2023-11-04",
+    "fecha_fin": "2024-11-04",
+    "monto": "99.99",
+    "estado": true,
+    "metodo_pago": "TARJETA",
+    "fecha_creacion": "2023-11-04T10:00:00Z"
+}
+
+-----------------------------------------------------------------------
+HU3 autenticación y cierre de sesion <----
+
+Login 
+HTTP = POST 
+http://127.0.0.1:8000/api/auth/login/
+
+Json ejemplo 
+{
+    "email": "usuario@miempresa.com",
+    "password": "contraseña123"
+}
+Respuesta 
+{
+    "message": "Login exitoso",
+    "token": "tu-token-de-autenticación",
+    "user": {
+        "id": 1,
+        "username": "usuario1",
+        "email": "usuario@miempresa.com",
+        "nombre_completo": "Juan Pérez",
+        "is_superuser": false,
+        "is_staff": false,
+        "empresa_id": 1,
+        "empresa_nombre": "Mi Empresa SA"
+    }
+}
+(requiere guardar token)
+
+Cerrar sesion 
+HTTP = POST
+http://127.0.0.1:8000/api/auth/logout/
+{
+    "token": "tu-token-de-autenticación"
+}
+Respuesta 
+{
+    "message": "Logout exitoso"
+}
+
+-----------------------------------------------------------------------
+HU4 crear Grupos <----
+HTTP CRUD
+http://127.0.0.1:8000/api/User/group
+
+json ejemplo post 
+{
+    "name": "Administradores",
+    "permissions": [1, 2, 3]  // IDs de los permisos a asignar
+}
+Respuesta GET
+[
+    {
+        "id": 1,
+        "name": "Administradores",
+        "permissions": [1, 2, 3]
+    },
+    {
+        "id": 2,
+        "name": "Usuarios",
+        "permissions": [1]
+    }
+]
+
+-----------------------------------------------------------------------
+HU5 Crear Usuarios HU6 asignar roles HU8 asignar permisos 
+reutilizaremos django admin!
+solo puedo verlo el user adm 
+
+http://127.0.0.1:8000/admin/auth/
+esta ruta lo lleva directo a un panel visual y listo para craer lo que sea necesario 
+
+-----------------------------------------------------------------------
+HU9 Configurar sistema <----
+HTTP CRUD
+http://127.0.0.1:8000/api/configuracion
+
+Json ejmplo post 
+{
+    "empresa": 1,
+    "color": "#FF5733",
+    "tipo_letra": "Arial",
+    "enum_tema": "CLARO"
+}
+json respuesta GET
+
+[
+    {
+        "id": 1,
+        "empresa": 1,
+        "color": "#FF5733",
+        "tipo_letra": "Arial",
+        "enum_tema": "CLARO"
+    }
+]
+
+-----------------------------------------------------------------------
+HU10 tipos de creditos <----
+http://127.0.0.1:8000/api/Creditos/tipo-creditos
+HTTP CRUD
+
+json ejmplo post 
+{
+    "nombre": "Crédito Personal",
+    "descripcion": "Crédito para personas naturales con tasa preferencial",
+    "monto_minimo": 1000.00,
+    "monto_maximo": 50000.00
+}
+json respuest get
+[
+    {
+        "id": 1,
+        "nombre": "Crédito Personal",
+        "descripcion": "Crédito para personas naturales con tasa preferencial",
+        "monto_minimo": "1000.00",
+        "monto_maximo": "50000.00"
+    },
+    {
+        "id": 2,
+        "nombre": "Crédito Empresarial",
+        "descripcion": "Crédito para empresas y negocios",
+        "monto_minimo": "5000.00",
+        "monto_maximo": "100000.00"
+    }
+]
+
+-----------------------------------------------------------------------
+HU11 log <--- 
+http://127.0.0.1:8000/api/User/admin-log/
+HTTP CRUD
+
+json get 
+[
+    {
+        "id": 1,
+        "action_time": "2023-11-04T10:30:00Z",
+        "user": {
+            "id": 1,
+            "username": "admin"
+        },
+        "content_type": {
+            "id": 1,
+            "model": "user"
+        },
+        "object_id": "2",
+        "object_repr": "usuario1",
+        "action_flag": 1,
+        "change_message": "Created user",
+        "action_description": "Added"
+    },
+    {
+        "id": 2,
+        "action_time": "2023-11-04T11:15:00Z",
+        "user": {
+            "id": 1,
+            "username": "admin"
+        },
+        "content_type": {
+            "id": 2,
+            "model": "group"
+        },
+        "object_id": "1",
+        "object_repr": "Administradores",
+        "action_flag": 2,
+        "change_message": "Changed permissions",
+        "action_description": "Changed"
+    }
+]
+(si quieres ver los log de un user en especificio seria asi )
+GET http://127.0.0.1:8000/api/User/users/1/   <- ese id lo consigo en el frontend 
+ejemplo json respuesta {
+    "id": 1,
+    "username": "usuario1",
+    "first_name": "Juan",
+    "last_name": "Pérez",
+    "email": "usuario@miempresa.com",
+    "date_joined": "2023-11-04T00:00:00Z",
+    "is_superuser": false,
+    "is_staff": false,
+    "empresa_id": 1,
+    "empresa_nombre": "Mi Empresa SA",
+    "groups": [1, 2],
+    "user_permissions": [1, 2, 3]
+}

@@ -1,0 +1,13 @@
+venv 
+__pycache__/
+.env
+*.pyc
+
+# Archivos de documentación con credenciales
+API_S3_UPLOAD_GUIDE.md
+CONFIGURACION_S3_COMPLETA.md
+configure_s3_bucket.py
+make_files_public.py
+test_s3_connection.py
+test_s3_simple.py
+PRUEBA_RAPIDA_REGISTRO.md
