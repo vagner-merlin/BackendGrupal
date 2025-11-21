@@ -14,6 +14,7 @@ def home_view(request):
             'usuarios': '/api/User/',
             'creditos': '/api/Creditos/',
             'clientes': '/api/Clientes/',
+            'assistant': '/api/',
         }
     })
 
@@ -24,4 +25,5 @@ urlpatterns = [
     path('api/User/', include('app_User.urls')),
     path('api/Creditos/', include('app_Credito.url_Creditos')),
     path('api/Clientes/', include('app_Cliente.urls_cliente')),
+    path('api/', include('app_Assistant.urls')),
 ]

@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'app_Credito',
     'app_Empresa',
     'app_User',
+    'app_Assistant',
     'storages',
 ]
 
@@ -221,6 +222,11 @@ AWS_S3_VERIFY = os.getenv('AWS_S3_VERIFY', 'True') == 'True'
 AWS_S3_CUSTOM_DOMAIN = os.getenv('AWS_S3_CUSTOM_DOMAIN', None)
 if AWS_S3_CUSTOM_DOMAIN:
     AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+
+# ==============================================
+# CONFIGURACIÓN DE GROQ AI
+# ==============================================
+GROQ_API_KEY = os.getenv('GROQ_API_KEY', '')
 
 # drf-spectacular settings
 SPECTACULAR_SETTINGS = {
